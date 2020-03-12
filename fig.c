@@ -1,3 +1,4 @@
+#include "fig.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -65,26 +66,6 @@ char *get_token (FILE *f, int ch)
 	return token;
 }
 
-typedef struct fig_value {
-	enum { Str, Tree } type;
-	union {
-		char *str;
-		struct fig_tree *tree;
-	};
-} fig_t;
-
-struct fig_tree {
-	char *key;
-	fig_t value;
-	struct fig_tree *left;
-	struct fig_tree *right;
-};
-typedef struct fig_tree *fig_tree_t;
-
-#define fig_str(ptr)  (fig_t) {.type = Str,  .str  = ptr}
-#define fig_tree(ptr) (fig_t) {.type = Tree, .tree = ptr}
-
-void fig_free (fig_t value);
 void tree_free (fig_tree_t tree)
 {
 	if (tree->key)
@@ -115,7 +96,6 @@ int balanced_parens (char *str)
 	return !parens;
 }
 
-void fig_print (FILE *f, fig_t value);
 void print_str (FILE *f, char *str)
 {
 	if (!str) {
@@ -231,7 +211,6 @@ fig_t fig_define (fig_tree_t *head, char *key, fig_t value)
 	return node->value;
 }
 
-fig_t parse_key (fig_tree_t *dest, char append, FILE *f, int ch);
 fig_tree_t parse_tree (FILE *f)
 {
 	fig_tree_t tree = NULL;
