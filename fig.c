@@ -317,9 +317,3 @@ fig_t fig_index (fig_tree_t tree, size_t index)
 	if (index - 1 - left >= fig_len(tree->right)) return fig_str(NULL);
 	return fig_index(tree->right, index - 1 - left);
 }
-
-int main (int argc, char **args)
-{
-	fig_tree_t tree = fig_parse(args[1]);
-	fig_print(stdout, fig_tree(tree));
-}
